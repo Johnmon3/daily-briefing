@@ -1,0 +1,361 @@
+<title>Daybreak — Daily Briefing</title>
+<style>
+  :root {
+    --paper: #F4F6F9;
+    --card: #FFFFFF;
+    --ink: #17202E;
+    --muted: #58637A;
+    --faint: #8A94A8;
+    --hairline: #DEE3EB;
+    --accent: #B4700A;
+    --up: #1B7A4B;
+    --down: #BE3F35;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0F141D;
+      --card: #171E2B;
+      --ink: #E9EDF5;
+      --muted: #9AA6BC;
+      --faint: #6B7691;
+      --hairline: #2A3345;
+      --accent: #F2A93B;
+      --up: #4CC38A;
+      --down: #F07C6F;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #F4F6F9; --card: #FFFFFF; --ink: #17202E; --muted: #58637A;
+    --faint: #8A94A8; --hairline: #DEE3EB; --accent: #B4700A;
+    --up: #1B7A4B; --down: #BE3F35;
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F141D; --card: #171E2B; --ink: #E9EDF5; --muted: #9AA6BC;
+    --faint: #6B7691; --hairline: #2A3345; --accent: #F2A93B;
+    --up: #4CC38A; --down: #F07C6F;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Avenir Next", Avenir, -apple-system, "Segoe UI", sans-serif;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 40px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+  a { color: inherit; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------- Masthead ---------- */
+  .masthead { display: flex; flex-direction: column; gap: 10px; }
+  .mast-top {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase;
+  }
+  .brand { font-weight: 600; color: var(--accent); }
+  .edition { color: var(--faint); letter-spacing: 0.12em; }
+  .dateline {
+    font-family: Charter, Georgia, "Times New Roman", serif;
+    font-size: clamp(30px, 6vw, 42px);
+    font-weight: 700;
+    line-height: 1.1;
+    text-wrap: balance;
+    margin-top: 2px;
+  }
+  .standfirst {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 58ch;
+    text-wrap: pretty;
+  }
+  .horizon {
+    height: 2px;
+    margin-top: 14px;
+    background: linear-gradient(90deg, var(--accent), var(--accent) 18%, transparent 85%);
+    border-radius: 1px;
+  }
+  .topic-nav {
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  }
+  .topic-nav a { color: var(--muted); text-decoration: none; }
+  .topic-nav a:hover { color: var(--accent); }
+
+  /* ---------- Markets strip ---------- */
+  .markets {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+  }
+  @media (max-width: 560px) { .markets { grid-template-columns: repeat(2, 1fr); } }
+  .tile {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 12px 14px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .tile .label {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--faint);
+  }
+  .tile .value {
+    font-size: 19px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .tile .delta {
+    font-size: 12.5px; font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .tile .delta small { font-weight: 400; color: var(--faint); font-size: 11px; }
+  .delta.up { color: var(--up); }
+  .delta.down { color: var(--down); }
+
+  /* ---------- Lede ---------- */
+  .lede { display: flex; flex-direction: column; gap: 8px; }
+  .kicker {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent);
+    font-weight: 600;
+  }
+  .kicker::before { content: ""; width: 18px; height: 2px; background: var(--accent); }
+  .lede h2 {
+    font-family: Charter, Georgia, "Times New Roman", serif;
+    font-size: clamp(24px, 5vw, 32px);
+    line-height: 1.18;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .lede h2 a { text-decoration: none; }
+  .lede h2 a:hover { color: var(--accent); }
+  .lede p { color: var(--muted); font-size: 16px; max-width: 62ch; text-wrap: pretty; }
+
+  /* ---------- Topic sections ---------- */
+  .topic { display: flex; flex-direction: column; gap: 20px; }
+  .topic-head {
+    display: flex; align-items: baseline; gap: 12px;
+    border-bottom: 1px solid var(--hairline);
+    padding-bottom: 8px;
+  }
+  .topic-head h2 {
+    font-size: 13px; letter-spacing: 0.2em; text-transform: uppercase;
+    font-weight: 700; color: var(--ink);
+  }
+  .topic-head h2::before { content: "— "; color: var(--accent); }
+  .topic-head .count { font-size: 12px; color: var(--faint); }
+  .story { display: flex; flex-direction: column; gap: 4px; }
+  .story h3 {
+    font-family: Charter, Georgia, "Times New Roman", serif;
+    font-size: 20px; line-height: 1.28; font-weight: 700;
+    text-wrap: balance;
+  }
+  .story h3 a { text-decoration: none; }
+  .story h3 a:hover { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .story p { color: var(--muted); font-size: 15px; max-width: 64ch; text-wrap: pretty; }
+  .story .meta { font-size: 12px; color: var(--faint); letter-spacing: 0.04em; }
+
+  /* ---------- Footer ---------- */
+  .signoff {
+    border-top: 1px solid var(--hairline);
+    padding-top: 20px;
+    display: flex; flex-direction: column; gap: 8px;
+    font-size: 14px; color: var(--muted);
+  }
+  .signoff .extra strong { color: var(--ink); }
+  .signoff .colophon { font-size: 12px; color: var(--faint); }
+
+  /* ---------- Load-in ---------- */
+  @media (prefers-reduced-motion: no-preference) {
+    .wrap > * { animation: rise 0.5s ease both; }
+    .wrap > *:nth-child(2) { animation-delay: 0.06s; }
+    .wrap > *:nth-child(3) { animation-delay: 0.12s; }
+    .wrap > *:nth-child(4) { animation-delay: 0.18s; }
+    .wrap > *:nth-child(n+5) { animation-delay: 0.24s; }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <div class="mast-top"><span class="brand">Daybreak</span><span class="edition">Edition No. 1</span></div>
+    <h1 class="dateline">Friday, July 10, 2026</h1>
+    <p class="standfirst">U.S. strikes on Iran enter a second day, crypto shrugs off the conflict on ETF inflows, and the largest foreign IPO in U.S. history pops 14% at the open.</p>
+    <nav class="topic-nav" aria-label="Topics">
+      <a href="#crypto">Crypto</a><a href="#ai">AI</a><a href="#tech">Tech</a><a href="#world">World Affairs</a><a href="#politics">Politics</a><a href="#finance">Finance</a>
+    </nav>
+    <div class="horizon" aria-hidden="true"></div>
+  </header>
+
+  <section class="markets" aria-label="Markets snapshot">
+    <div class="tile"><span class="label">Bitcoin</span><span class="value">$64,380</span><span class="delta up">▲ 2.2% <small>24h</small></span></div>
+    <div class="tile"><span class="label">Ethereum</span><span class="value">$1,790</span><span class="delta up">▲ 2.1% <small>24h</small></span></div>
+    <div class="tile"><span class="label">S&amp;P 500</span><span class="value">7,543.64</span><span class="delta up">▲ 0.8% <small>Thu close</small></span></div>
+    <div class="tile"><span class="label">Nasdaq</span><span class="value">26,206.89</span><span class="delta up">▲ 1.3% <small>Thu close</small></span></div>
+  </section>
+
+  <article class="lede">
+    <div class="kicker">Top story</div>
+    <h2><a href="https://www.democracynow.org/2026/7/10/headlines" target="_blank" rel="noopener">U.S. strikes Iran for a second straight day, hitting 90 more military targets</a></h2>
+    <p>Retaliation for Iran's continued attacks in the Strait of Hormuz has now hit 170-plus targets over two nights, while Iran fired missiles and drones at Bahrain, Kuwait, Qatar and a U.S. base in Jordan. It comes a day after huge crowds in Mashhad buried Supreme Leader Ayatollah Ali Khamenei — and with reports the U.S. is weighing technical talks with Tehran, this is the story that moves oil, markets and everything below.</p>
+    <div class="meta">Democracy Now · Just Security</div>
+  </article>
+
+  <section class="topic" id="crypto">
+    <div class="topic-head"><h2>Crypto</h2><span class="count">4 stories</span></div>
+    <article class="story">
+      <h3><a href="https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-friday-july-10-2026-up-nearly-3-since-last-friday-130101171.html" target="_blank" rel="noopener">Bitcoin holds above $64K as ETF inflows return</a></h3>
+      <p>Bitcoin ETFs just ended a 10-day outflow streak, and BTC is up 2.8% on the week despite open conflict in the Gulf — a notable stress test of crypto's "resilient asset" thesis.</p>
+      <div class="meta">Yahoo Finance · Investing News</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://cryptonews.com/news/crypto-news-july-10-regulation-geopolitics-bitcoin-ethereum-price/" target="_blank" rel="noopener">An updated CLARITY Act could be introduced as soon as next week</a></h3>
+      <p>U.S. negotiators are finalizing a new version of the Digital Asset Market Clarity Act. Analysts say regulatory optimism — not geopolitics — is now the main force holding prices firm.</p>
+      <div class="meta">CryptoNews · CoinDesk</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://cryptonews.com/news/crypto-news-july-10-regulation-geopolitics-bitcoin-ethereum-price/" target="_blank" rel="noopener">Crypto is about to count toward U.S. mortgages</a></h3>
+      <p>The FHFA has ordered Fannie Mae and Freddie Mac to prepare to count cryptocurrency as an asset in mortgage applications — a quiet but structural step in mainstreaming crypto wealth.</p>
+      <div class="meta">CryptoNews</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.coingabbar.com/en/crypto-currency-news/crypto-market-news-july-10-bitcoin-price-defi-market-up-today" target="_blank" rel="noopener">Global crypto market cap climbs back to $2.25T</a></h3>
+      <p>The overall market gained 1.9% in 24 hours on $60.3B of volume, with ETH at $1,790 tracking Bitcoin's move higher.</p>
+      <div class="meta">CoinGabbar</div>
+    </article>
+  </section>
+
+  <section class="topic" id="ai">
+    <div class="topic-head"><h2>AI</h2><span class="count">5 stories</span></div>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Grok 4.5's "number 1" claims deflate under independent testing</a></h3>
+      <p>Musk announced benchmark supremacy, but Artificial Analysis ranks Grok 4.5 fourth — behind Claude Fable 5, GPT-5.5 and Claude Opus 4.8 — while a reported 54% hallucination rate fuels the skepticism.</p>
+      <div class="meta">Build Fast with AI · Artificial Analysis</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Anthropic overtakes OpenAI on revenue at $47B — and both are eyeing fall IPOs</a></h3>
+      <p>OpenAI is targeting a September roadshow and Anthropic October, setting up the two biggest listings in tech history within weeks of each other.</p>
+      <div class="meta">Build Fast with AI</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Claude Cowork and ChatGPT Work launched on the same day</a></h3>
+      <p>Agentic knowledge work went mobile: both products let you delegate document, spreadsheet and presentation tasks from your phone and monitor long-running agent sessions remotely.</p>
+      <div class="meta">Build Fast with AI</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Sysdig documents JADEPUFFER, the first fully autonomous AI ransomware</a></h3>
+      <p>600 payloads deployed with no human at the keyboard — a milestone the security industry has been dreading, and a preview of what AI-vs-AI defense will look like.</p>
+      <div class="meta">Sysdig · Build Fast with AI</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">AI governance goes global: 169 countries meet in Geneva as China cracks down on companion apps</a></h3>
+      <p>The inaugural UN Global Dialogue on AI Governance opened this week, while Beijing ordered every AI companion app — including Doubao and Qwen — to shut down personalized agents by July 15.</p>
+      <div class="meta">Build Fast with AI · UN</div>
+    </article>
+  </section>
+
+  <section class="topic" id="tech">
+    <div class="topic-head"><h2>Tech</h2><span class="count">4 stories</span></div>
+    <article class="story">
+      <h3><a href="https://www.thestreet.com/stock-market-today/stock-market-today-july-10-2026-nasdaq-futures-slip-ahead-of-sk-hynix-debut" target="_blank" rel="noopener">SK Hynix pops 14% in the largest-ever U.S. listing by a foreign company</a></h3>
+      <p>The Nvidia supplier raised $26.5B and opened at $170 — a monster vote of confidence in the AI memory-chip supply chain.</p>
+      <div class="meta">TheStreet · Yahoo Finance</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.cnbc.com/technology/" target="_blank" rel="noopener">Waymo to start driverless rides in 4 more U.S. markets</a></h3>
+      <p>The expansion pace is accelerating — robotaxis are quietly becoming a normal part of more American cities each quarter.</p>
+      <div class="meta">CNBC</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Meta cuts 8,000 jobs as Zuckerberg admits AI agents have stalled</a></h3>
+      <p>In a town hall, Zuckerberg conceded Meta's agent products haven't shipped meaningful progress in four months — a rare public admission of an AI misstep at that scale.</p>
+      <div class="meta">Build Fast with AI</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.buildfastwithai.com/blogs/ai-news-today-july-10-2026" target="_blank" rel="noopener">Xiaomi's MiMo-V2-Pro is now the most-used model on OpenRouter</a></h3>
+      <p>A 21.1% platform share, driven by strong coding performance, a 1M-token context window and rock-bottom pricing — Chinese open models keep eating the mid-market.</p>
+      <div class="meta">Build Fast with AI · OpenRouter</div>
+    </article>
+  </section>
+
+  <section class="topic" id="world">
+    <div class="topic-head"><h2>World Affairs</h2><span class="count">4 stories</span></div>
+    <article class="story">
+      <h3><a href="https://www.aljazeera.com/news/2026/7/10/trump-grants-kyiv-patriots-licences-whats-next-in-the-russia-ukraine-war" target="_blank" rel="noopener">Trump grants Kyiv licences for Patriot systems</a></h3>
+      <p>The move shifts the air-defense calculus as the UN reports Russian strikes killed at least 265 Ukrainian civilians in June alone.</p>
+      <div class="meta">Al Jazeera · UN Security Council</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.foxnews.com/world/drone-offensive-hits-russian-oil-tankers-refineries-industrial-scale-moscow-bans-diesel-exports" target="_blank" rel="noopener">Ukraine's drone offensive hits Russian oil "at industrial scale"; Moscow bans diesel exports</a></h3>
+      <p>Strikes on tankers and refineries are now squeezing Russia's fuel economy hard enough to force export bans — watch the knock-on effects in global energy prices.</p>
+      <div class="meta">Fox News</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.democracynow.org/2026/7/10/headlines" target="_blank" rel="noopener">Israeli forces now control roughly 65% of Gaza</a></h3>
+      <p>The expanding ground control marks a new phase of the war, with forces pushing deeper into the territory.</p>
+      <div class="meta">Democracy Now</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.democracynow.org/2026/7/10/headlines" target="_blank" rel="noopener">Ebola spreads beyond its epicenter in Congo as unpaid health workers walk off the job</a></h3>
+      <p>New suspected cases outside Ituri province signal the outbreak is outrunning containment — made worse by frontline workers striking over wages unpaid since May.</p>
+      <div class="meta">Democracy Now</div>
+    </article>
+  </section>
+
+  <section class="topic" id="politics">
+    <div class="topic-head"><h2>Politics</h2><span class="count">3 stories</span></div>
+    <article class="story">
+      <h3><a href="https://www.democracynow.org/2026/7/10/headlines" target="_blank" rel="noopener">Trump fires two Democratic members of the Election Assistance Commission</a></h3>
+      <p>A Republican member also resigned, leaving the federal election agency reshaped four months before the midterm primaries season peaks.</p>
+      <div class="meta">Democracy Now</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.democracynow.org/2026/7/10/headlines" target="_blank" rel="noopener">DOJ threatens election officials with prosecution over noncitizen voter rolls</a></h3>
+      <p>A letter to all 50 states warns of fines and imprisonment, and federal election monitors are being sent to 15 jurisdictions in six states during upcoming primaries.</p>
+      <div class="meta">Democracy Now</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://www.washingtonpost.com/politics/" target="_blank" rel="noopener">Maine Democrats scramble for a Collins challenger after their nominee exits</a></h3>
+      <p>The Democratic nominee left the race following a sexual assault allegation; the party has until July 27 to field a replacement against Sen. Susan Collins.</p>
+      <div class="meta">The Washington Post</div>
+    </article>
+  </section>
+
+  <section class="topic" id="finance">
+    <div class="topic-head"><h2>Finance</h2><span class="count">4 stories</span></div>
+    <article class="story">
+      <h3><a href="https://finance.yahoo.com/markets/stocks/articles/stock-market-news-july-10-075400187.html" target="_blank" rel="noopener">S&amp;P 500 closes at 7,543 as AI giants lift the Nasdaq 1.3%</a></h3>
+      <p>Micron and Meta jumped 4.5% and 4.7% respectively, though nine of eleven sectors actually finished lower — the rally is narrow.</p>
+      <div class="meta">Yahoo Finance</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://finance.yahoo.com/markets/live/stock-market-today-friday-july-10-dow-sp-nasdaq-113921604.html" target="_blank" rel="noopener">Futures diverge this morning ahead of SK Hynix's mega-debut</a></h3>
+      <p>The $26.5B IPO is today's main event; how it trades will set the tone for the pipeline of listings behind it — including two AI labs eyeing the fall.</p>
+      <div class="meta">Yahoo Finance · Benzinga</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://finance.yahoo.com/markets/stocks/articles/stock-market-news-july-10-075400187.html" target="_blank" rel="noopener">Jobless claims fall to 215K, beating estimates</a></h3>
+      <p>Initial claims dropped by 2,000 against a consensus of 223K — a labor market this firm keeps the Fed's hawks in the conversation.</p>
+      <div class="meta">Yahoo Finance · Zacks</div>
+    </article>
+    <article class="story">
+      <h3><a href="https://simplywall.st/stocks/us/tech/nasdaq-lite/lumentum-holdings/news/us-stock-market-today-sp-500-futures-edge-higher-as-inflatio" target="_blank" rel="noopener">The 10-year holds near 4.6%, keeping one more Fed hike in play</a></h3>
+      <p>Elevated yields keep mortgages, car loans and business borrowing expensive — and inflation worries haven't left the room.</p>
+      <div class="meta">Simply Wall St</div>
+    </article>
+  </section>
+
+  <footer class="signoff">
+    <p class="extra"><strong>Extra time:</strong> France eased past Morocco to become the first team into the World Cup semifinals; Spain face Belgium today. <a href="https://www.espn.com/soccer/story/_/id/49321840/world-cup-2026-today-blog-10-07-2026-live-updates-news-fixtures-schedule-results-france-morocco-spain-belgium" target="_blank" rel="noopener">ESPN</a></p>
+    <p>That's the briefing. Back tomorrow at daybreak. ☕</p>
+    <p class="colophon">Curated from Yahoo Finance, CryptoNews, Build Fast with AI, TheStreet, Al Jazeera, Democracy Now, CNBC, ESPN and others. Headlines link to sources.</p>
+  </footer>
+</div>
