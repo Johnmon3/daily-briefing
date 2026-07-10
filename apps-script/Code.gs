@@ -40,7 +40,9 @@ function sendDaybreak() {
     return;
   }
 
-  const m = html.match(/<title>([\s\S]*?)<\/title>/i);
+  // Strip HTML comments first so notes in the file can never leak into the subject.
+  const cleaned = html.replace(/<!--[\s\S]*?-->/g, '');
+  const m = cleaned.match(/<title>([\s\S]*?)<\/title>/i);
   const subject = m ? m[1].trim() : 'Daybreak — your morning briefing';
 
   MailApp.sendEmail({ to: TO, subject: subject, htmlBody: html });
