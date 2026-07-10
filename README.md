@@ -1,6 +1,8 @@
 # Daybreak — Daily News Briefing
 
-A personal morning news briefing covering **Crypto, AI, Tech, World Affairs, Politics, and Finance**, refreshed automatically every morning.
+A personal morning news briefing covering **Leisure & Entertainment (the attractions industry), Crypto, AI, Tech, World Affairs, Politics, and Finance**, refreshed automatically every morning.
+
+The Leisure & Entertainment section leads the page (Aahan works at Amusement Services International): 2-3 trade stories a day from sources like [Blooloop](https://blooloop.com/) and [Amusements & Attractions](https://www.amusementsandattractions.com/), prioritizing arcades, FECs, and the Middle East market. One industry story also appears in the email under "From the industry".
 
 **Read it here (bookmark this):** https://claude.ai/code/artifact/904b7d2f-409a-41c5-bf5d-d98684779486
 
