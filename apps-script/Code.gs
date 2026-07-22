@@ -9,7 +9,7 @@
 const GITHUB_USER = 'Johnmon3';
 const REPO = 'daily-briefing';
 const BRANCH = 'main';
-const TO = 'aahanprakash123@gmail.com';
+const TO = 'aahanprakash123@gmail.com,prakash@asi-world.com';
 const LATE_HOUR = 9; // warn once if nothing new by this hour (your local time)
 
 function sendDaybreak() {
