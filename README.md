@@ -22,7 +22,7 @@ Every morning:
 
 ## Files
 
-- `briefing/index.html` — the full briefing page (source of the artifact). Design system: "Daybreak" — dawn-blue paper, navy ink, single amber accent, serif headlines. Both light and dark themes.
+- `briefing/index.html` — the full briefing page (source of the artifact). Design system: "Daybreak" — dawn-blue paper, navy ink, single amber accent, serif headlines. Both light and dark themes. The Crypto section opens with a **Crypto Board**: the top 10 coins by market cap (excluding stablecoins, always including BTC/ETH/XRP/ADA) with price and 24h change, refreshed daily.
 - `briefing/email.html` — compact Gmail-safe nudge: markets line, top 3 stories, button to the full page. The `<title>` tag is the email subject line.
 - `apps-script/Code.gs` — the Apps Script that sends the email (lives in script.google.com, kept here as the source of truth).
 

@@ -117,6 +117,46 @@
   .delta.up { color: var(--up); }
   .delta.down { color: var(--down); }
 
+  /* ---------- Crypto board ---------- */
+  .cryptoboard {
+    background: var(--card);
+    border: 1px solid var(--hairline);
+    border-radius: 6px;
+    padding: 4px 16px 6px;
+  }
+  .cryptoboard .board-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    padding: 11px 0 9px;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .cryptoboard .board-head .t {
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600;
+  }
+  .cryptoboard .board-head .asof {
+    font-size: 11px; color: var(--faint); letter-spacing: 0.04em;
+  }
+  .coin-grid { display: grid; grid-template-columns: repeat(2, 1fr); column-gap: 30px; }
+  @media (max-width: 520px) { .coin-grid { grid-template-columns: 1fr; } }
+  .coin {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--hairline);
+    font-variant-numeric: tabular-nums;
+  }
+  .coin:nth-last-child(-n+2) { border-bottom: 0; }
+  .coin .sym { display: flex; align-items: baseline; gap: 8px; min-width: 0; }
+  .coin .ticker { font-size: 13.5px; font-weight: 600; }
+  .coin .name {
+    font-size: 12px; color: var(--faint);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .coin .q { display: flex; align-items: baseline; gap: 10px; white-space: nowrap; }
+  .coin .price { font-size: 13.5px; font-weight: 600; }
+  .coin .chg { font-size: 12px; font-weight: 600; }
+  .chg.up { color: var(--up); }
+  .chg.down { color: var(--down); }
+
   /* ---------- Lede ---------- */
   .lede { display: flex; flex-direction: column; gap: 8px; }
   .kicker {
@@ -230,6 +270,21 @@
 
   <section class="topic" id="crypto">
     <div class="topic-head"><h2>Crypto</h2><span class="count">3 stories</span></div>
+    <div class="cryptoboard" aria-label="Crypto board — top 10 by market cap">
+      <div class="board-head"><span class="t">Crypto Board · Top 10</span><span class="asof">24h · Jul 23</span></div>
+      <div class="coin-grid">
+        <div class="coin"><span class="sym"><span class="ticker">BTC</span><span class="name">Bitcoin</span></span><span class="q"><span class="price">$65,405</span><span class="chg down">▼ 0.74%</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">ETH</span><span class="name">Ethereum</span></span><span class="q"><span class="price">$1,914</span><span class="chg down">▼ 0.72%</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">XRP</span><span class="name">XRP</span></span><span class="q"><span class="price">$1.13</span><span class="chg down">▼ 0.32%</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">BNB</span><span class="name">BNB</span></span><span class="q"><span class="price">$569.12</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">SOL</span><span class="name">Solana</span></span><span class="q"><span class="price">$77.51</span><span class="chg down">▼ 0.10%</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">DOGE</span><span class="name">Dogecoin</span></span><span class="q"><span class="price">$0.072</span><span class="chg down">▼ 0.54%</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">ADA</span><span class="name">Cardano</span></span><span class="q"><span class="price">$0.173</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">TRX</span><span class="name">TRON</span></span><span class="q"><span class="price">$0.329</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">AVAX</span><span class="name">Avalanche</span></span><span class="q"><span class="price">$6.62</span></span></div>
+        <div class="coin"><span class="sym"><span class="ticker">LINK</span><span class="name">Chainlink</span></span><span class="q"><span class="price">$8.60</span><span class="chg down">▼ 1.49%</span></span></div>
+      </div>
+    </div>
     <article class="story">
       <h3><a href="https://www.coindesk.com/business/2026/07/22/midnight-token-rebounds-after-wanchain-bridge-hack-hoskinson-calls-for-industry-overhaul" target="_blank" rel="noopener">A signature-reuse exploit drains $13m in NIGHT tokens from the Wanchain bridge linking Cardano and BNB Chain, amplifying one legitimate transaction 65,000-fold before Wanchain takes the bridge offline</a></h3>
       <p>NIGHT briefly hit a record low before rebounding 19%, and both the Midnight Foundation and Cardano insist their core chains were never touched — but Charles Hoskinson's call for a "zero-knowledge revamp" underscores how often this year's biggest crypto losses have come from bridge plumbing, not the protocols themselves.</p>
