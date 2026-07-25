@@ -6,6 +6,8 @@ The Leisure & Entertainment section leads the page (Aahan works at Amusement Ser
 
 **Read it here (bookmark this):** https://claude.ai/code/artifact/904b7d2f-409a-41c5-bf5d-d98684779486
 
+The artifact link above always shows the latest edition **only when you're logged into the owning claude.ai account**. For anyone else — the email's second recipient, an incognito tab, a phone that isn't logged in — use the **public, always-latest** render (this is what the email button links to): https://htmlpreview.github.io/?https://raw.githubusercontent.com/Johnmon3/daily-briefing/main/briefing/index.html
+
 ## How it works
 
 ```
