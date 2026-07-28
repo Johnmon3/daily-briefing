@@ -83,6 +83,25 @@ puzzle guaranteed-valid and adds negligible cost to the morning routine.
 - When the bank is near a full rotation (or on request), add `21.html`, `22.html`,
   … and bump `BANK_SIZE` in the routine's selection command. No other changes.
 
+## Implementation notes (as built)
+
+The design intent held, but two parameters changed once construction hit reality:
+
+- **Grid is 4x4, not 5x5.** A valid 5x5 mini built only from common words cannot
+  be reliably auto-generated offline (even the full system dictionary yields
+  almost no fills for a near-open 5x5 — it needs a large scored word database,
+  which the NYT has and we don't). A 4x4 double word square (every row and
+  column a 4-letter word) generates reliably with common/near-common words.
+- **Bank is 19 puzzles, not 20.** Per the user's choice ("proper feel, some
+  less-common words"), puzzles are *proper* crosswords (Across != Down) drawn
+  from a 421-word pool; a variety cap (<=3 shared words per pair) yields 19
+  strong, distinct puzzles. `BANK_SIZE = 19` in the routine's selector.
+- **The bank is produced by an offline generator**, `tools/mini-generator/
+  generate.py`: a backtracking filler over a curated clued word list that
+  rejects symmetric grids, dedupes transposes, validates every entry against
+  `/usr/share/dict/words`, and emits `briefing/minis/NN.html`. Refill = add
+  words, rerun `python3 generate.py`, bump `BANK_SIZE`.
+
 ## Launch / verification
 - Add CSS + an initial puzzle inlined into today's `index.html` so it shows on
   the current page immediately (not only next morning).
